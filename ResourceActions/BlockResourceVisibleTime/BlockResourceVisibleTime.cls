@@ -6,7 +6,7 @@
 					the visible day(s) on the gantt to the selected resource
 */
 
-global class BlockResourceVisibleTime implements CustomGanttServiceResourceAction {
+global class BlockResourceVisibleTime implements FSL.CustomGanttServiceResourceAction {
 
 	global String action(Id resourceId, Id stmId, Datetime ganttStartDate, Datetime ganttEndDate, Map<String, Object> additionalParameters) {
 
@@ -25,7 +25,7 @@ global class BlockResourceVisibleTime implements CustomGanttServiceResourceActio
 
 		na.RecordTypeId = recordTypeNA.Id;
 		na.ResourceId = resourceId;
-		na.Approved__c = true;
+		na.FSL__Approved__c = true;
 		na.Start = ganttStartDate;
 		na.End = ganttEndDate;
 
