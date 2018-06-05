@@ -6,9 +6,9 @@
 					the visible day(s) on the gantt to the selected resource
 */
 
-public class BlockVisibleTime implements CustomGanttServiceResourceAction {
+global class BlockResourceVisibleTime implements CustomGanttServiceResourceAction {
 
-	public String action(Id resourceId, Id stmId, Datetime ganttStartDate, Datetime ganttEndDate, Map<String, Object> additionalParameters) {
+	global String action(Id resourceId, Id stmId, Datetime ganttStartDate, Datetime ganttEndDate, Map<String, Object> additionalParameters) {
 
 		ResourceAbsence na = new ResourceAbsence();
 
@@ -32,7 +32,6 @@ public class BlockVisibleTime implements CustomGanttServiceResourceAction {
 		insert na;
 
 		ServiceResource resource = [SELECT Name FROM ServiceResource WHERE Id =: resourceId];
-
 
 		return 'Blocked availability to ' + resource.Name + ' from ' + ganttStartDate.format() + ' to ' + ganttEndDate.format();
 
