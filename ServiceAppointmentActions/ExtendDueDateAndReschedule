@@ -1,0 +1,21 @@
+global class ExtendDueDateandReschedule implements FSL.CustomGanttServiceAppointmentAction{
+    global String action(List<Id> serviceAppoitmentsIds, Datetime ganttStartDate, Datetime ganttEndDate, Map<String, Object> additionalParameters) {
+       
+        List<ServiceAppointment> sas = [SELECT DueDate, AppointmentNumber FROM ServiceAppointment WHERE Id in : serviceAppoitmentsIds];
+        String reply = 'Due Date was extended in 1 day and rescheduled';
+        List<String> saNames = new List<String>();
+
+        for (ServiceAppointment s : sas) {
+            s.Duedate = s.DueDate.addDays(1);
+            saNames.add(s.AppointmentNumber);
+            s.FSL__Auto_Schedule__c	= true;
+            
+        }
+       
+        upsert sas;
+
+        reply = String.join(saNames, ', ');
+        return 'Due Date was extended in 1 day and rescheduled: ' + reply;
+    }
+
+}
