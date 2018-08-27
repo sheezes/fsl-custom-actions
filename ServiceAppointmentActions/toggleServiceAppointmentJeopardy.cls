@@ -8,12 +8,12 @@ global class toggleServiceAppointmentJeopardy implements FSL.CustomGanttServiceA
  
     global String action(List<Id> serviceAppoitmentsIds, Datetime ganttStartDate, Datetime ganttEndDate, Map<String, Object> additionalParameters) {
        
-        List<ServiceAppointment> saList = [SELECT InJeopardy__c, AppointmentNumber FROM ServiceAppointment WHERE Id in : serviceAppointmentsIds];
+        List<ServiceAppointment> saList = [SELECT FSL__InJeopardy__c, AppointmentNumber FROM ServiceAppointment WHERE Id in : serviceAppoitmentsIds];
         String reply = '';
         List<String> saNames = new List<String>();
 
         for (ServiceAppointment s : saList) {
-            s.InJeopardy__c = !s.InJeopardy__c;
+            s.FSL__InJeopardy__c = !s.FSL__InJeopardy__c;
             saNames.add(s.AppointmentNumber);
         }
        
