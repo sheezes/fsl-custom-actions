@@ -1,3 +1,9 @@
+/*	
+	Type: 			Service appointment (gantt) custom action
+	Description: 	This action will call resource schedule optimization with the selected services as "Unschedulable services".
+ Optimization will optimize the resource's schedule and group work that is near by the selected services.
+*/
+
 global class OptimizeByServices implements FSL.CustomGanttServiceAppointmentAction {
  
     global String action(List<Id> serviceAppointmentsIds, Datetime ganttStartDate, Datetime ganttEndDate, Map<String, Object> additionalParameters) {
