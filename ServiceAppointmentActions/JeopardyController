@@ -1,0 +1,36 @@
+/*
+    Author:         Mor Cohen
+    
+    Type:           Service Appointment custom action - controller 
+    Description:    This action will change services whose due date will occur in the next few days (depending on the customer's input number) to be In Jeopardy.
+*/
+
+
+public with sharing class JeopardyController {
+
+    public integer daysNumber { get; Set; }
+    public string myReply { get; Set; }
+
+   
+    public JeopardyController(){
+       myReply = 'Service Appointments successfully processed: ';
+    }
+
+    public void save() {
+        Date endDate = Date.today().addDays(daysNumber);
+        List<ServiceAppointment> saList = [SELECT Id, InJeopardy__c, AppointmentNumber, DueDate, Status FROM ServiceAppointment WHERE DueDate <=: endDate  and InJeopardy__c =: false and (status =: 'None' or status =: 'Scheduled')];
+        List<ServiceAppointment> saToUpdate = new List<ServiceAppointment>();
+        String reply = '';
+        List<String> saNames = new List<String>();
+        for (ServiceAppointment s : saList) {
+            s.InJeopardy__c = true;
+            saNames.add(s.AppointmentNumber);
+            saToUpdate.add(s);
+        }
+        upsert saToUpdate;
+
+        reply = String.join(saNames, ', ');
+        myReply =  myReply + reply;
+    }
+
+}

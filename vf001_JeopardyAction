@@ -1,0 +1,80 @@
+/*
+    Author:         Mor Cohen
+    
+    Type:           Service Appointment custom action - Visualforce page 
+    Description:    This action will change services whose due date will occur in the next few days (depending on the customer's input number) to be In Jeopardy.
+*/
+
+
+
+<apex:page controller="JeopardyController" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false">
+    <apex:outputPanel id="tst">
+      <script type="text/javascript">
+        function CloseAndRefresh(){
+          alert("{!myReply}");
+          parent.postMessage('closeLightbox','*');
+        } 
+      </script>
+      <apex:form styleClass="someClass">
+        <apex:pageBlock>
+                <apex:pageBlockSection>
+                    <apex:outputText 
+                    styleClass="asideText"
+                    value="Services whose due date will occur in the next few days (depending on your input number) will be In Jeopardy."
+                    />
+                </apex:pageBlockSection>
+                <div class="formor">
+ 
+                    <apex:outputText 
+                    styleClass="asideText1"
+                    value="Insert number of days:    "
+                    />
+        
+                  <apex:inputText styleClass="box" value="{!daysNumber}"/>
+                  <apex:commandButton 
+                  styleClass="formBtn"
+                  action="{!save}" 
+                  value="Save" 
+                  rerender="tst"
+                  oncomplete="CloseAndRefresh();" /> 
+                </div>
+          </apex:pageBlock>
+      </apex:form>
+    </apex:outputPanel>
+
+
+    <style type="text/css">
+        .someClass {
+          font-family: helvetica;
+        }
+        .asideText { 
+          font-size:16px;
+          color:#16325c;
+        }
+
+        .asideText1 { 
+          font-size:14px;
+          color:#16325c;
+        }
+
+        .formor{
+          margin-top: 15px;
+        }
+
+        .box {
+          margin-right: 20px;
+          padding: 6px;
+          border-radius: 2px;
+          border: 1px solid #bdbdbd;
+        }
+
+        .formBtn {
+          border: 1px solid #0070d2;
+          background: #0070d2;
+          color: #FFF;
+          border-radius: 2px;
+          cursor: pointer;
+          padding: 5px;
+        }
+    </style>
+</apex:page>
